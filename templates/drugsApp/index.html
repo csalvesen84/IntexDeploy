@@ -1,0 +1,169 @@
+{% extends 'basemain.html'%}
+{% load static %}
+{% block content %}
+
+<!-- Masthead-->
+<header class="masthead">
+    <div class="container">
+        <div class="masthead-subheading"></div>
+        <div class="masthead-heading text-uppercase">The Opioid Epidemic </div>
+        <a class="btn btn-primary btn-xl text-uppercase" style="background-color: #ffad33" href="#portfolio">Tell Me More</a>
+    </div>
+</header>
+<!-- Services-->
+<section class="page-section" id="services">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase" >Data</h2>
+            <h3 class="section-subheading text-muted">Discover and explore the data behind the opioid epidemic</h3>
+        </div>
+        <div class="row text-center">
+            <div class="col-md-4">
+                <span class="fa-stack fa-4x">
+                    <i class="fas fa-circle fa-stack-2x" style="color:#ffad33"></i>
+                    <i class="fas fa-chart-bar fa-stack-1x fa-inverse"></i>
+                </span>
+                <a href="{% url 'analytics' %}"><h4 class="my-3" >Analytics</h4></a>
+                <p class="text-muted">Use our smart calculators to create predictions and recommendations</p>
+            </div>
+            <div class="col-md-4">
+                <span class="fa-stack fa-4x">
+                    <i class="fas fa-circle fa-stack-2x" style="color:#ffad33"></i>
+                    <i class="fas fa-database fa-stack-1x fa-inverse"></i>
+                </span>
+                <a href="{% url 'display' %}"><h4 class="my-3" >View Database</h4></a>
+                <p class="text-muted">Access to our large database of prescriber and drug information</p>
+            </div>
+            <div class="col-md-4">
+                <span class="fa-stack fa-4x">
+                    <i class="fas fa-circle fa-stack-2x" style="color:#ffad33"></i>
+                    <i class="fas fa-plus fa-stack-1x fa-inverse"></i>
+                </span>
+                <a href="{% url 'add' %}"><h4 class="my-3" >Add Data</h4></a>
+                <p class="text-muted">Add information to our database about prescribers</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Portfolio Grid-->
+<section class="page-section bg-light" id="portfolio">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">Drug Overdose Facts</h2>
+            <br>
+            <h3 class="section-subheading text-muted"></h3>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-sm-6 mb-4" style:"border-color: black">
+                <!-- Portfolio item 1-->
+                <div class="portfolio-item">
+                    <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
+                        
+                        <img class="img-fluid" src={% static "img/usa_opioid.png" %} alt="..." />
+                    </a>
+                    <div class="portfolio-caption">
+                        <div class="portfolio-caption-heading"><br>Every day 115 people in the US die of opioid overdose.<br><br></div>
+                        <div class="portfolio-caption-subheading text-muted"> </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6 mb-4">
+                <!-- Portfolio item 2-->
+                <div class="portfolio-item">
+                    <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal2">
+                        <img class="img-fluid" src={% static "img/utah.jpg"%} alt="..." />
+                    </a>
+                    <div class="portfolio-caption">
+                        <div class="portfolio-caption-heading">Utah is ranked 7th in the nation for drug overdose deaths between 2013-2016.<br><br></div>
+                        <div class="portfolio-caption-subheading text-muted"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6 mb-4">
+                <!-- Portfolio item 3-->
+                <div class="portfolio-item">
+                    <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal3">
+                        <img class="img-fluid" src= {% static "img/sad.jpg" %} alt="..." />
+                    </a>
+                    <div class="portfolio-caption">
+                        <div class="portfolio-caption-heading">Opioid deaths in Utah have outpaced deaths caused by firearms, falls, motor vehicle crashes.</div>
+                        <div class="portfolio-caption-subheading text-muted"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6 mb-4 mb-lg-0">
+                
+        </div>
+    </div>
+</section>
+<!-- About-->
+<section class="page-section" id="about">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">History of the America Opioid Crisis</h2>
+            <h3 class="section-subheading text-muted"></h3>
+        </div>
+        <ul class="timeline ">
+            <li>
+                <div class="timeline-image"><img class="rounded-circle img-fluid" src={% static "img/!2000.png"%} alt="..." /></div>
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <h3 style="color:#ffad33">2000</h3>
+                        <h5 class="subheading">Less than 20,000 Americans died from a drug-involved overdose.</h5>
+                    </div>
+                    <div class="timeline-body"><p class="text-muted"></p></div>
+                </div>
+            </li>
+            <li class="timeline-inverted">
+                <div class="timeline-image"><img class="rounded-circle img-fluid" src={% static "img/!2010.png"%} alt="..." /></div>
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <h3 style="color:#ffad33">2010</h3>
+                        <h5 class="subheading">38,329 Americans died from a drug-involved overdose.</h5>
+                    </div>
+                    <div class="timeline-body"><p class="text-muted"></p></div>
+                </div>
+            </li>
+            <li>
+                <div class="timeline-image"><img class="rounded-circle img-fluid" src={% static "img/2019.png"%} alt="..." /></div>
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <h3 style="color:#ffad33">2019</h3>
+                        <h5 class="subheading">70,630 Americans died from a drug-involved overdose. </h5>
+                    </div>
+                    <div class="timeline-body"><p class="text-muted"></p></div>
+                </div>
+            </li>
+            <li class="timeline-inverted" style="color:#ffad33">
+                <div class="timeline-image">
+                    <h4>
+                        Death toll
+                        <br />
+                        Continues To
+                        <br />
+                        Increase
+                    </h4>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <br><br>
+    <div class="container" style="border: 1px solid black;max-width: 75%">
+        <div class="text-center" >
+            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal3">
+                <img class="img-fluid" src= {% static "img/opioidgraph.jpg" %} alt="..." />
+            </a>
+        </div>
+    </div>
+    <br><br>
+    <!--https://www.hhs.gov/opioids/about-the-epidemic/index.html-->
+    <div class="container" style="max-width: 75%"> 
+        <div class="text-center">
+            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal3">
+                <img class="img-fluid" src= {% static "img/opioidfacts1.png" %} alt="..." />
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

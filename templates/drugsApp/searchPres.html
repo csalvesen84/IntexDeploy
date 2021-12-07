@@ -1,0 +1,114 @@
+{% extends 'basegen.html'%}
+{% load static %}
+{% block content %}
+<header class="masthead">
+    <div class="container">
+        <div class="masthead-heading text-uppercase" style="font-style: bold">Search Prescriber</div>
+    </div>
+</header>
+<!-- Search-->
+<section class="page-section" id="services">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-2">
+                <span class="fa-stack fa-4x">
+                    <i class="fas fa-circle fa-stack-2x" style="color:#ffad33"></i>
+                    <i class="fas fa-user fa-stack-1x fa-inverse"></i>
+                </span>
+                <h4 class="my-3">Search Prescriber</h4>
+                <form class="text-muted" name="searchForm" method="GET" action="{% url 'search' %}">
+                    {% csrf_token %}
+                    {% comment %} <input type="hidden" id="editNPI" name="searchNPI" value="{{pres.NPI}}"></input> {% endcomment %}
+                    <label for="searchFirstName">First Name
+                        <input type="text" id="searchFirstName" name="searchFirstName" maxlength="15" width="75px" value={{qfirstname}}>
+                    </label>
+                    <br><br>
+                    <label for="searchLastName">Last Name
+                        <input type="text" id="searchLastName" name="searchLastName" width="75px" value={{qlastname}}>
+                    </label>
+                    <br><br>
+                    <label for="searchGender">Gender    
+                        <select name="searchGender" id="searchGender" >
+                            <option selected style:"display:none" value=""> -- select an option -- </option>
+                            <option value="M" {% if qgender == "M" %}selected="selected"{% endif %}>M</option>
+                            <option value="F" {% if qgender == "F" %}selected="selected"{% endif %}>F</option>
+                        </select>
+                    </label>
+                    <br><br> 
+                    <label for="searchCredentials" style="text-align: center;">Credentials    
+                        <select name="searchCredentials" id="searchCredentials" width="75px">
+                            <option style:"display:none" value=""> -- select an option -- </option>
+                            {% for cred in credName %}
+                            <option value="{{ cred.Credential }}" {% if cred.Credential == qcredentials %}selected="selected"{% endif %}>{{ cred.Credential }}</option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                    <br><br>
+                    <label for="searchState" style="text-align: center;">State    
+                        <select name="searchState" id="searchState" width="75px">
+                            <option style:"display:none" value=""> -- select an option -- </option>
+                            {% for state in stateName %}
+                            <option value="{{ state.stateabbrev }}" {% if state.stateabbrev == qstate %}selected="selected"{% endif %}>{{ state.stateabbrev }}</option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                    <br><br>
+                    <label for="searchSpecialty" style="text-align: center;">Specialty<br>  
+                        <select name="searchSpecialty" id="searchSpecialty">
+                            <option selected style:"display:none" value=""> -- select an option -- </option>
+                            {% for specs in specName %}
+                            <option value="{{ specs.Specialty }}" {% if specs.Specialty == qspecialty %}selected="selected"{% endif %}>{{ specs.Specialty }}</option>
+                            {% endfor %}
+                        </select>
+                    </label>                
+                    <br><br>
+                    <label for="searchIsOpioidPrescriber" style="text-align: center;">Is Opioid Prescriber?  <br>   
+                        <select name="searchIsOpioidPrescriber" id="searchIsOpioidPrescriber">
+                            <option style:"display:none" value=""> -- select an option -- </option>
+                            <option {% if qisopioidpres == "True" %}selected="selected"{% endif %} value="True">True</option>
+                            <option {% if qisopioidpres == "False" %}selected="selected"{% endif %} value="False">False</option>
+                        </select></label>
+                        <br><br>
+                    <button type="submit" class="btn btn-primary" style="background-color: #ffad33">Search</button><br><br>
+                </form>
+            </div>
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-9">
+                <h1><b>Prescribers</b></h1>
+                <p style="color: grey">*Click on presciber's NPI to view details about the prescriber
+                <div class="container">
+                    <table style="table-layout: fixed;">
+                        <tr style="text-align: center;background-color:#ffad33;border: 1px solid black;">
+                            <th class="col-md-4">NPI</th>
+                            <th class="col-md-4">First Name</th>
+                            <th class="col-md-4">Last Name</th>
+                            <th class="col-md-4">Gender</th>
+                            <th class="col-md-4">State</th>
+                            <th class="col-md-4">Credential</th>
+                            <th class="col-md-4">Specialty</th>
+                            <th class="col-md-4">Opioid Provider?</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                        {% for pres in searchpres %}
+                        <tr style="border: 1px solid black;text-align: center;">
+                            <td><a href="{% url 'detail' detailNPI=pres.NPI %}">{{pres.NPI}}</a></td> <!--might need to fix-->
+                            <td class="col-md-4">{{ pres.Fname }}</td>
+                            <td class="col-md-4">{{ pres.Lname }}</td>
+                            <td class="col-md-4">{{ pres.Gender }}</td>
+                            <td class="col-md-4">{{ pres.StateAbbreviation }}</td>
+                            <td class="col-md-4">{{ pres.Credential }}</td>
+                            <td class="col-md-4">{{ pres.Specialty }}</td>
+                            <td class="col-md-4">{{ pres.IsOpioidPrescriber }}</td>
+                            <td><a class="btn btn-primary" href="{% url 'edit' editNPI=pres.NPI %}">Edit</a></td>
+                            <td><a class="btn btn-primary" href="{% url 'delete' deleteNPI=pres.NPI %}">Delete</a></td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends 'basegen.html'%}
+{% load static %}
+{% block content %}
+<!-- Masthead-->
+<header class="masthead">
+    <div class="container">
+        <div class="masthead-heading text-uppercase" style="font-style: bold">Analytics</div>
+    </div>
+</header>
+<!-- Portfolio Grid-->
+<!-- Services-->
+<section class="page-section" id="services">
+    <div class="container ">
+        <div class="row text-center">
+            <p style="color: grey">**Click on the title of the Predictor and Recommender to go to the Google Collaboratory deployment sites.</p>
+            <div class="col-md" >
+                <a href="https://colab.research.google.com/drive/1dF5bPRx5ulf6zTTBqhMg44yna1VFeXxB?usp=sharing"><h4 class="my-3">Predict Number of Prescriptions</h4></a>
+                <br>
+                <form class="text-muted" name="predict" method="post">
+                    {% csrf_token %}
+                    <label for="gender" style="text-align: left;">Gender    
+                    <select name="gender" id="listGender" width="75px">
+                        <option value="M">M</option>
+                        <option value="F">F</option>
+                    </select></label>
+                    <br><br>
+                    <label for="state" style="text-align: left;">State    
+                    <select name="state" id="state" width="75px">
+                        {% for state in states %}
+                        <option value="{{ state.stateabbrev }}">{{ state.stateabbrev }}</option>
+                        {% endfor %}
+                    </select></label>
+                    <br><br>
+                    <label for="specialty" style="text-align: center;">Specialty    
+                    <select name="specialty" id="specialty" width="25px">
+                        {% for specs in specName %}
+                        <option value="{{ specs.Specialty }}">{{ specs.Specialty }}</option>
+                        {% endfor %}
+                    </select></label>
+                    <br><br>
+                    <label for="opioidPrescriber" style="text-align: left;">Is Opioid Prescriber?     
+                        <select name="opioidPrescriber" id="opioidPrescriber" width="75px">
+                            <option value="TRUE">True</option>
+                            <option value="FALSE">False</option>
+                        </select></label>
+                        <br><br>
+                    <button type="sumbit" class="btn btn-primary" name="predict" >Make Prediction</button><br><br>
+                </form> 
+                <div class="container" style="text-align: center;padding-top: 20px;">
+                    <h5>Prediction: {{ outie }}</h5>
+                </div>      
+            </div>
+            <div class="col-md"  >
+                <a href="https://colab.research.google.com/drive/1hz5z9YKuBJXGOr5PrdkUic1P03iTzr5u?usp=sharing"><h4 class="my-3">Recommend a Drug</h4></a>
+                <br>
+                <form class="text-muted" name="recommend" method="post">
+                    {% csrf_token %}
+                    <label for="fullName">Full Name
+                    <input type="text" id="fullName" name="fullName" maxlength="50" width="75px"></label><br><br>
+                    <label for="drugName" style="text-align: left;">Drug Name    
+                    <select name="drugName" id="drugName" width="75px">
+                        {% for drug in drugs %}
+                        <option value="{{ drug.drugname }}">{{ drug.drugname }}</option>
+                        {% endfor %}
+                    </select></label>
+                    <br><br>
+                    <label for="quantity" style="text-align: left;">Qty Prescribed   
+                    <input type="number" id="quantity" name="quantity"></label>
+                    <br><br><br><br>
+                    <button class="btn btn-primary" type="submit" name="recommend" >Make Recommendation</button><br><br>
+                </form>
+                <div class="container" style="text-align: center;padding-top: 20px;">
+                    <h5>Recommendation: </h5>
+                    <p>{{ out }}</p> 
+                </div>         
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="container" style="text-align: left;padding-top: 30px;border: 1px solid black">
+        <h2 style="color:#ffad33">SQL Script Solutions</h2>
+        <br>
+        <h6> Prescribers currently prescribing only opioids -</h6><p> 175 prescribers in the given datasets are prescribing just opioids and no other non-opioid drugs. </p>
+        <br>
+        <h6> The quantity of opioids the 175 prescribers above are prescribing -</h6><p> Carter Browning, Zechariah Foster, and Paul Clay have all prescribed over 10,000 opioids and no non-opioid drugs. </p>
+        <br>
+        <h6> Prescribers giving high levels of opioids (compared to other non-opioid drugs) - </h6><p>“High-level” is interpreted to mean the quantity of opioids is 1.5x the amount of non-opioid drugs prescribed by each given prescriber. 39 prescribers are deemed to prescribe high-levels of opioids. PrescriberID 1831150630 prescribed 4,262 opioids and only 31 non-opioids. </p>
+        <br>
+        <h6> Total number of prescribed opioid drugs -</h6><p> 27,956 </p>
+        <br>
+        <h6> Most-prescribed opioid -</h6><p> Hydrocodone.Acetaminophen is the most-prescribed opioid, with the sum being 21,777.</p> 
+        <br>
+        <h6> Opioid related deaths by state -</h6><p> California has had the most opioid related deaths with the total being 4,521. Next is Ohio (2,744) and Pennsylvania (2,732). Utah is ranked 29th with 603 deaths. </p>
+        <br>
+        <h6> Opioid related deaths by state percentage-ratio (deaths/population) -</h6><p> While considering the deaths to population, the ranking of deaths by state changes to West Virginia being the highest, then New Mexico and New Hampshire. Utah ranks 8th at 0.0208%. </p>
+        <br><br>
+        <p style="color: grey">*Upon your acceptance of our project proposal, we will include dynamic analyses for each analysis above.</p>
+
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'basegen.html'%}
+{% load static %}
+{% block content %}
+<header class="masthead">
+    <div class="container">
+        <div class="masthead-heading text-uppercase" style="font-style: bold">Search by Drug</div>
+    </div>
+</header>
+<!-- Search-->
+<section class="page-section" id="services">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-2">
+                <span class="fa-stack fa-4x">
+                    <i class="fas fa-circle fa-stack-2x" style="color:#ffad33"></i>
+                    <i class="fas fa-user fa-stack-1x fa-inverse"></i>
+                </span>
+                <h4 class="my-3">Search Drugs</h4>
+                <form class="text-muted" name="searchForm" method="GET" action="{% url 'searchDrugs' %}">
+                    {% csrf_token %}                    
+                    <label for="searchDrugName" style="text-align: center;">Drug Name    
+                        <select name="searchDrugName" id="searchDrugName" width="75px">
+                            <option selected style:"display:none" value=""> -- select an option -- </option>
+                            {% for drug in drugsName %}
+                            <option value="{{ drug.drugname }}" {% if drug.drugname == qdrugsname %}selected="selected"{% endif %}>{{ drug.drugname }}</option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                    <br><br>
+                    <label for="searchDrugOpioid" style="text-align: center;">Is Drug Opioid?     
+                        <select name="searchDrugOpioid" id="searchDrugOpioid" width="75px">
+                            <option selected style:"display:none" value=""> -- select an option -- </option>
+                            <option value="True" {% if qisopioiddrug == "True" %}selected="selected"{% endif %}>True</option>
+                            <option value="False" {% if qisopioiddrug == "False" %}selected="selected"{% endif %}>False</option>
+                        </select></label>
+                        <br><br>
+                    <button type="submit" class="btn btn-primary" style="background-color: #ffad33">Search Drug</button><br><br>
+                </form>
+            </div>
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-9">
+                <h1><b>Search by Drug</b></h1>
+                <div class="container">
+                    <div class="row text-center">
+                        <table style="table-layout: fixed;">
+                            <tr style="text-align: center;background-color:#ffad33;border: 1px solid black;">
+                                <th class="col-md-4">Drug ID</th>
+                                <th class="col-md-4">Drug Name</th>
+                                <th class="col-md-4">IsOpioid</th>
+                                <th class="col-md-4">Average</th>
+                            </tr>
+                            {% for drug in searchdrug %}
+                            <tr style="border: 1px solid black;text-align: center;">
+                                <td class="col-md-4">{{drug.drugid}}</td>
+                                <td class="col-md-4"><a href="{% url 'detailDrug' detaildrugname=drug.drugname %}">{{ drug.drugname }}</a></td>
+                                <td class="col-md-4">{{ drug.isopioid }}</td>
+                                <td class="col-md-4">{{ drug.average }}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

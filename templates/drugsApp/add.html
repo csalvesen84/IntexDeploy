@@ -1,0 +1,78 @@
+{% extends 'basegen.html'%}
+{% load static %}
+{% block content %}
+
+<!-- Masthead-->
+<header class="masthead">
+    <div class="container">
+        <div class="masthead-heading text-uppercase" style="font-style: bold">Add Prescriber Data</div>
+    </div>
+</header>
+<!-- Services-->
+    <div class="container-fluid" style="padding-bottom:50px;padding-top:50px;">
+        <div class="row text-center">
+            <!--<h1 class="section-heading text-uppercase" >Add Prescriber</h1>-->
+            <!--<h3 class="section-subheading">Insert new prescriber data by filling out the fields below</h3>-->
+            <div class="col-md-4">
+                <br><br>
+            </div>
+            <div class="col-md-4">
+                <span class="fa-stack fa-4x">
+                    <i class="fas fa-circle fa-stack-2x" style="color:#ffad33"></i>
+                    <i class="fas fa-user fa-stack-1x fa-inverse"></i>
+                </span>
+                <h4 class="my-3">Prescriber Info</h4>
+                <form class="text-muted" method="post" action="{% url 'add' %} ">
+                    {% csrf_token %}
+                    <label for="npi">NPI
+                    <input type="number" id="npi" name="npi" min="1000000000" max="9999999999" width="75px" value="1000000000"></label><br><br>
+                    <label for="firstName">First Name
+                    <input type="text" id="firstName" name="firstName" maxlength="15" width="75px"></label><br><br>
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" name="lastName" width="75px"><br><br>
+                    <label for="gender" style="text-align: left;">Gender    
+                    <select name="gender" id="listGender" width="75px">
+                        <option value="M">M</option>
+                        <option value="F">F</option>
+                    </select></label>
+                    <br><br> 
+                    <label for="credentials" style="text-align: left;">Credentials    
+                    <select name="credentials" id="credentials" width="75px">
+                        {% for cred in credentialName %}
+                        <option value="{{ cred.Credential }}">{{ cred.Credential }}</option>
+                        {% endfor %}
+                    </select></label>
+                    <br><br>
+                    <label for="state" style="text-align: left;">State    
+                    <select name="state" id="state" width="75px">
+                        {% for state in stateName %}
+                        <option value="{{ state.stateabbrev }}">{{ state.stateabbrev }}</option>
+                        {% endfor %}
+                    </select></label>
+                    <br><br>
+                    <label for="specialty" style="text-align: center;">Specialty    
+                        <select name="specialty" id="specialty" width="25px">
+                            {% for specs in specialtyName %}
+                            <option value="{{ specs.Specialty }}">{{ specs.Specialty }}</option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                    <br><br>
+                    <label for="totalPrescriptions" style="text-align: left;">Total Prescriptions    
+                    <input type="number" id="totalPrescriptions" name="totalPrescriptions"></label>
+                    <br><br>
+                    <label for="opioidPrescriber" style="text-align: left;">Is Opioid Prescriber?     
+                        <select name="opioidPrescriber" id="opioidPrescriber" width="75px">
+                            <option value="True">True</option>
+                            <option value="False">False</option>
+                        </select></label>
+                        <br><br>
+                        <button type="submit" class="btn btn-primary">Add Prescriber</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

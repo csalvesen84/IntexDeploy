@@ -1,0 +1,66 @@
+{% extends 'basegen.html'%}
+{% load static %}
+{% block content %}
+<!-- Masthead-->
+<header class="masthead">
+    <div class="container">
+        <div class="masthead-heading text-uppercase" style="font-style: bold">Drug Details</div>
+    </div>
+</header>
+<section class="page-section" id="services">
+    <div class="container ">
+        <div class="row text-center">
+            <div class="col-md" >
+                <span class="fa-stack fa-4x">
+                    <i class="fas fa-circle fa-stack-2x" style="color:#ffad33"></i>
+                    <i class="fas fa-pills fa-stack-1x fa-inverse"></i>
+                </span>
+                <h2><b>Drug</b></h2>
+                <br><br>
+                <div class="container">
+                    <div class="row text-center">
+                        <table style="table-layout: fixed;text-align: center;">
+                            <tr style="text-align: center;background-color:#ffad33;border: 1px solid black;">
+                                <th class="col-md-4" >DrugID</th> 
+                                <th class="col-md-4" >Drug Name</th> 
+                                <th class="col-md-4" >Opioid?</th> 
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">{{ drug.drugid }}</td> 
+                                <td class="col-md-4">{{ drug.drugname }}</td> 
+                                <td class="col-md-4">{{ drug.isopioid}}</td> 
+                            </tr>
+                        </table>
+                        <br><br><br><br><br><br><br><br>
+                        <h2><b>Top 10 Prescribers of {{ drug.drugname }}</b></h2>
+                        <br><br>
+                        <table style="table-layout: fixed;text-align: center;">
+                            <tr style="text-align: center;background-color:#ffad33;border: 1px solid black;">
+                                <th class="col-md-4">NPI</th> 
+                                <th class="col-md-4">First Name</th> 
+                                <th class="col-md-4">Last Name</th> 
+                                <th class="col-md-4">Quantity</th> 
+                            </tr>
+                            {% for pres in prescriber %}
+                            <tr>
+                                <td><a href="{% url 'detail' detailNPI=pres.prescriberid.NPI %}">{{ pres.prescriberid.NPI }}</a></td>
+                                <td class="col-md-4">{{ pres.prescriberid.Fname }}</td> 
+                                <td class="col-md-4">{{ pres.prescriberid.Lname }}</td>
+                                <td class="col-md-4">{{ pres.qty }}</td> 
+                            </tr>
+                            {% endfor %}
+                        </table>
+                        <p></p>
+                        <br><br><br><br>
+                        <p style="color: grey">**Click on the NPI for information on all drugs that that prescriber prescribes.</p>
+                    </div>
+                </div>
+            </div>
+            <br><br>
+        </div>
+    </section>
+    <div class="container" style="text-align: center">
+        <td><a class="btn btn-primary" href="{% url 'display' %}">View Database</a></td>
+    </div>
+    <br><br>
+{% endblock %}

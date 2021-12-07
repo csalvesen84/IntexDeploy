@@ -1,0 +1,49 @@
+{% extends 'basegen.html'%}
+{% load static %}
+{% block content %}
+<header class="masthead">
+    <div class="container">
+        <div class="masthead-heading text-uppercase" style="font-style: bold">Search by Drug</div>
+    </div>
+</header>
+<!-- Search-->
+<section class="page-section" id="services">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-2">
+                <span class="fa-stack fa-4x">
+                    <i class="fas fa-circle fa-stack-2x" style="color:#ffad33"></i>
+                    <i class="fas fa-pills fa-stack-1x fa-inverse"></i>
+                </span>
+                <form class="text-muted" name="searchForm" method="GET" action="{% url 'searchDrugs' %}">
+                    {% csrf_token %}                    
+                    <label for="searchDrugName" style="text-align: center;">Drug Name    
+                        <select name="searchDrugName" id="searchDrugName" width="75px">
+                            <option selected style:"display:none" value=""> -- select an option -- </option>
+                            {% for drug in drugsName %}
+                            <option value="{{ drug.drugname }}">{{ drug.drugname }}</option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                    <br><br>
+                    <label for="searchDrugOpioid" style="text-align: center;">Is Drug Opioid?     
+                        <select name="searchDrugOpioid" id="searchDrugOpioid" width="75px">
+                            <option selected style:"display:none" value=""> -- select an option -- </option>
+                            <option value="True">True</option>
+                            <option value="False">False</option>
+                        </select></label>
+                        <br><br>
+                    <button type="submit" class="btn btn-primary" style="background-color: #ffad33">Search Drug</button><br><br>
+                </form>
+            </div>
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-9">
+                <h1><b>Search by Drug</b></h1>
+                <h3 class="section-subheading text-muted">Search drugs by changing the fields below. Not all fields need to be filled in order to search.</h3>
+                <p>{{nothing}}</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

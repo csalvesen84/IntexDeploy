@@ -1,0 +1,92 @@
+{% extends 'basegen.html'%}
+{% load static %}
+{% block content %}
+<!-- Masthead-->
+<header class="masthead">
+    <div class="container">
+        <div class="masthead-heading text-uppercase" style="font-style: bold">Prescriber Details</div>
+    </div>
+</header>
+<section class="page-section" id="services">
+    <div class="container ">
+        <div class="row text-center">
+            <div class="col-md" >
+                <span class="fa-stack fa-4x">
+                    <i class="fas fa-circle fa-stack-2x" style="color:#ffad33"></i>
+                    <i class="fas fa-user fa-stack-1x fa-inverse"></i>
+                </span>
+                <h2><b>Prescriber</b></h2>
+                <div class="container" >
+                    <div class="row text-center">
+                        <table style="table-layout: fixed;text-align: center;">
+                            <tr style="text-align: center;background-color:#ffad33;border: 1px solid black;">
+                                <th class="col-md-4">NPI</th>
+                                <th class="col-md-4">First Name</th>
+                                <th class="col-md-4">Last Name</th>
+                                <th class="col-md-4">Gender</th>
+                                <th class="col-md-4">State</th>
+                                <th class="col-md-4">Credential</th>
+                                <th class="col-md-4">Specialty</th>
+                                <th class="col-md-4">Opioid Provider?</th>
+                                <th class="col-md-4">Total Prescriptions</th>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">{{ pres.NPI }}</td>
+                                <td class="col-md-4">{{ pres.Fname }}</td>
+                                <td class="col-md-4">{{ pres.Lname }}</td>
+                                <td class="col-md-4">{{ pres.Gender }}</td>
+                                <td class="col-md-4">{{ pres.StateAbbreviation }}</td>
+                                <td class="col-md-4">{{ pres.Credential }}</td>
+                                <td class="col-md-4">{{ pres.Specialty }}</td>
+                                <td class="col-md-4">{{ pres.IsOpioidPrescriber }}</td>
+                                <td class="col-md-4">{{ pres.TotalPrescriptions}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <p></p>
+            <br><br><br><br>
+            <div class="col-md"   >
+                <span class="fa-stack fa-4x">
+                    <i class="fas fa-circle fa-stack-2x" style="color:#ffad33"></i>
+                    <i class="fas fa-pills fa-stack-1x fa-inverse"></i>
+                </span>
+                <h2><b>Prescribed Drugs</b></h2>
+                <div class="container">
+                    <div class="row text-center">
+                        <table style="table-layout: fixed;">
+                            <tr style="text-align: center;background-color:#ffad33;border: 1px solid black;">
+                                <th class="col-md-4">DrugID</th> <!-- Drug-->
+                                <th class="col-md-4">Drug Name</th> <!-- Triple or Drugs -->
+                                <th class="col-md-4">Opioid?</th> <!-- Drugs -->
+                                <th class="col-md-4">Quantity</th> 
+                                <th class="col-md-4">*Average</th> 
+                            </tr>
+                            {% for drug in triple %}
+                            <tr>
+                                <td class="col-md-4">{{ drug.drugname.drugid }}</td> <!-- Drugs -->
+                                <td class="col-md-4"><a href="{% url 'detailDrug' detaildrugname=drug.drugname %}">{{drug.drugname}}</a></td> <!-- Drugs -->
+                                <td class="col-md-4">{{ drug.drugname.isopioid}}</td> <!-- Triple -->
+                                <td class="col-md-4">{{ drug.qty }}</td>
+                                <td class="col-md-4">{{ drug.drugname.average }}</td> <!-- Triple -->
+                            </tr>
+                            {% endfor %}
+                        </table>
+                        <p></p>
+                        <br><br><br><br>
+                        <p style="color: grey">*The average column is the average for each drug by all prescribers (but only for those that were prescribed by this prescriber)</p>
+                        <p style="color: grey">**Click on the Drug Name for additional information.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br><br>
+    </div>
+</section>
+<div class="container" style="text-align: center">
+    <td><a class="btn btn-primary" href="{% url 'display' %}">View Database</a></td>
+</div>
+<br><br>
+
+{% endblock %}

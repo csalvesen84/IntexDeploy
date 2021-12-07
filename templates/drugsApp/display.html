@@ -1,0 +1,50 @@
+{% extends 'basegen.html'%}
+{% load static %}
+{% block content %}
+<!-- Masthead-->
+<header class="masthead">
+    <div class="container">
+        <div class="masthead-heading text-uppercase" style="font-style: bold">List of Prescribers</div>
+    </div>
+</header>
+<br><br>
+
+<div class="container">
+    <p style="color: grey">*Click on presciber's NPI to view details about the prescriber
+    <table style="table-layout: fixed;" >
+        <tr style="text-align: center;background-color:#ffad33;border: 1px solid black;">
+            <th>*NPI</th>
+            <th style="padding-left: 10px;">First Name</th>
+            <th style="padding-left: 10px;">Last Name</th>
+            <th style="padding-left: 10px;">Gender</th>
+            <th style="padding-left: 30px;">State</th>
+            <th style="padding-left: 30px;">Credential</th>
+            <th>Specialty</th>
+            <th style="padding-right: 30px;">Opioid Provider?</th>
+            <th>Total Prescriptions</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        {% for pres in prescribers %}
+        <tr style="border: 1px solid black;text-align: center;" maxlength="10">
+            <td><a href="{% url 'detail' detailNPI=pres.NPI %}">{{ pres.NPI }}</a></td>
+            <td style="padding-left: 10px;">{{ pres.Fname }}</td></a>
+            <td style="padding-left: 10px;">{{ pres.Lname }}</td>
+            <td style="padding-left: 10px;">{{ pres.Gender }}</td>
+            <td style="padding-left: 30px;">{{ pres.StateAbbreviation }}</td>
+            <td style="padding-left: 30px;">{{ pres.Credential }}</td>
+            <td style="text-align: center;">{{ pres.Specialty }}</td>
+            <td style="word-wrap:break-word;padding-right: 30px;">{{ pres.IsOpioidPrescriber }}</td>
+            <td>{{ pres.TotalPrescriptions}}</td>
+            <td><a class="btn btn-primary" href="{% url 'edit' editNPI=pres.NPI %}">Edit</a></td>
+            <td><a class="btn btn-primary" href="{% url 'delete' deleteNPI=pres.NPI %}">Delete</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <br><br>
+    <div class="container" style="text-align: center;">
+        <form class="btn btn-primary" name="form" method="post" action="{% url 'display' %}">{% csrf_token %}<button type="submit" class="btn btn-primary" style="background-color: #ffad33">Load All</button></form>
+    </div>
+    <br><br>
+</div>
+{% endblock %}

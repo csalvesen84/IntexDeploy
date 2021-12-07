@@ -1,0 +1,74 @@
+{% extends 'basegen.html'%}
+{% load static %}
+{% block content %}
+<!-- Masthead-->
+<header class="masthead">
+    <div class="container">
+        <div class="masthead-heading text-uppercase" style="font-style: bold">Edit Prescriber</div>
+    </div>
+</header>
+<!-- Services-->
+<section class="page-section" id="services">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-4">
+                <br><br>
+            </div>
+            <div class="col-md-4">
+                <span class="fa-stack fa-4x">
+                    <i class="fas fa-circle fa-stack-2x" style="color:#ffad33"></i>
+                    <i class="fas fa-user fa-stack-1x fa-inverse"></i>
+                </span>
+                <h4 class="my-3">Prescriber Info</h4>
+                <form class="text-muted" name="form" method="post" action="{% url 'update' %}">
+                    {% csrf_token %}
+                    <input type="hidden" id="editNPI" name="editNPI" value="{{pres.NPI}}"></input>
+                    <label for="firstName">First Name
+                    <input type="text" id="firstName" name="firstName" maxlength="15" width="75px" value="{{pres.Fname}}"></label><br><br>
+                    <label>Last Name</label>
+                    <input type="text" id="lastName" name="lastName" width="75px" value="{{pres.Lname}}"><br><br>
+                    <label for="gender" style="text-align: left;">Gender    
+                    <select name="gender" id="listGender" width="75px">
+                        <option {% if pres.Gender == "M" %}selected="selected"{% endif %} value="M">M</option>
+                        <option {% if pres.Gender == "F" %}selected="selected"{% endif %} value="F">F</option>
+                    </select></label>
+                    <br><br> 
+                    <label for="credentials" style="text-align: left;">Credentials    
+                    <select name="credentials" id="credentials" width="75px">
+                        {% for cred in credName %}
+                        <option value="{{ cred.Credential }}" {% if cred.Credential == pres.Credential %}selected="selected"{% endif %}>{{ cred.Credential }}</option>
+                        {% endfor %}
+                    </select></label>
+                    <br><br>
+                    <label for="state" style="text-align: left;">State    
+                    <select name="state" id="state" width="75px">
+                        {% for state in stateName %}
+                        <option value="{{ state.stateabbrev }}" {% if state.stateabbrev == presState.stateabbrev %}selected="selected"{% endif %}>{{ state.stateabbrev }}</option>
+                        {% endfor %}
+                    </select></label>
+                    <br><br>
+                    <label for="specialty" style="text-align: center;">Specialty    
+                        <select name="specialty" id="specialty" width="25px">
+                            {% for specs in specName %}
+                            <option value="{{ specs.Specialty }}">{{ specs.Specialty }}</option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                    <br><br>
+                    <label for="totalPrescriptions" style="text-align: left;">Total Prescriptions    
+                    <input type="number" id="totalPrescriptions" name="totalPrescriptions" value="{{pres.TotalPrescriptions}}"></label>
+                    <br><br>
+                    <label for="opioidPrescriber" style="text-align: left;">Is Opioid Prescriber?     
+                        <select name="opioidPrescriber" id="opioidPrescriber" width="75px">
+                            <option {% if pres.IsOpioidPrescriber == "True"%}selected="selected"{% endif %} value="True">True</option>
+                            <option {% if pres.IsOpioidPrescriber == "False"%}selected="selected"{% endif %} value="False">False</option>
+                        </select></label>
+                        <br><br>
+                    <button type="submit" class="btn btn-primary" style="background-color: #ffad33">Submit Changes</button><br><br>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
